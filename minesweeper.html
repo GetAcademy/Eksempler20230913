@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #app {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(4, 100px);
+        }
+
+        #app>div {
+            border: 1px solid gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        // model
+        let cells = [
+            11, 11, 10, 10,
+            19, 11, 10, 10,
+            12, 12, 10, 10,
+            19, 11, 10, 10,
+        ];
+
+        // view
+        updateView();
+        function updateView() {
+            let html = '';
+            for (let i = 0; i < cells.length; i++) {
+                html += `<div>${getCellContent(i)}</div>`;
+            }
+            document.getElementById('app').innerHTML = html;
+        }
+
+        function getCellContent(index) {
+            let cell = cells[i];
+            if (cell == 9) return 'mine';
+            if (cell < 10) return cell;
+            return `<button onclick="openCell(${i})">Åpne</button>`;
+        }
+
+        // controller
+        function openCell(index) {
+            cells[index] -= 10;
+            updateView();
+        }
+        
+        /*
+            Tre måter
+
+            1: variabelmetoden
+             let content;
+             if (cell == 9) {
+                 content = 'mine';
+             } else if (cell > 9) {
+                 content = `<button onclick="openCell(${i})">Åpne</button>`;
+             } else {
+                 content = cell;
+             }
+             html += `<div>${content}</div>`;
+
+             2: Ternary operator-metoden
+                html += `
+                    <div>
+                        ${ 
+                            cell == 9 ? 'mine' : 
+                            cell > 9 ? `<button onclick="openCell(${i})">Åpne</button>` : 
+                            cell
+                        }
+                    </div>`;
+                    
+             3: Funksjon
+                html += `<div>${getCellContent(i)}</div>`;
+
+                function getCellContent(index) {
+                    let cell = cells[i];
+                    if (cell == 9) return 'mine';
+                    if (cell < 10) return cell;
+                    return `<button onclick="openCell(${i})">Åpne</button>`;
+                }             
+        */
+
+    </script>
+</body>
+
+</html>
